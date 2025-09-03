@@ -37,3 +37,10 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+.env
+internalcodes.txt
+
+#server
+__pycache__/
+*.pyc
+venv/
