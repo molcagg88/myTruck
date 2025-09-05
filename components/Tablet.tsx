@@ -3,10 +3,12 @@ import React from "react";
 import { Text, View } from "react-native";
 interface TabletProps {
   type: number;
+  size?: number;
   text: string;
+  circle?: boolean;
 }
 
-export const Tablet: React.FC<TabletProps> = ({ type, text }) => {
+export const Tablet: React.FC<TabletProps> = ({ size, type, text, circle }) => {
   const { styles, colors } = useTheme();
 
   return (
@@ -19,7 +21,8 @@ export const Tablet: React.FC<TabletProps> = ({ type, text }) => {
               : colors.secondarySoft
             : colors.teritarySoft,
         borderWidth: 1,
-        borderRadius: 17,
+
+        borderRadius: circle ? "50%" : 12,
         borderColor:
           type === 1 || type == 2
             ? type == 1
@@ -28,8 +31,8 @@ export const Tablet: React.FC<TabletProps> = ({ type, text }) => {
             : colors.teritary,
         alignItems: "center",
         justifyContent: "center",
-        paddingHorizontal: 5,
-        paddingVertical: 3,
+        paddingHorizontal: circle ? 8 : 6,
+        paddingVertical: circle ? 4 : 3,
         alignSelf: "flex-start",
       }}
     >
@@ -40,7 +43,7 @@ export const Tablet: React.FC<TabletProps> = ({ type, text }) => {
               ? styles.buttonText
               : styles.buttonSecondaryText
             : styles.buttonTeritaryText,
-          { fontSize: 12 },
+          { fontSize: size ? size : 12 },
         ]}
       >
         {text}

@@ -9,7 +9,7 @@ export default function AppLayout() {
     <>
       <Tabs
         screenOptions={{
-          headerShown: false,
+          headerTitle: "Customer mode",
           tabBarActiveBackgroundColor: colors.primarySoft,
           tabBarActiveTintColor: colors.primary,
           tabBarInactiveTintColor: colors.dim,

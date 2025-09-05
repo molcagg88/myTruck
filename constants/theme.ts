@@ -21,6 +21,7 @@ const palette = {
     primarySoft: "#e6f4fc",
     secondarySoft: "#fdeaf5",
     teritarySoft: "#e6f6e9",
+    layerBackground: "#ffffffff",
   },
   dark: {
     background: "#202124",
@@ -39,6 +40,7 @@ const palette = {
     primarySoft: "#308cfc36",
     secondarySoft: "#39162e",
     teritarySoft: "#0e2d1e",
+    layerBackground: "#404040ff",
   },
 };
 
@@ -126,6 +128,33 @@ export function createTheme(mode: ThemeType = "light") {
       padding: 20,
       borderRadius: 14,
       marginBottom: 12,
+    },
+    infoText: {
+      backgroundColor: colors.teritarySoft,
+      color: colors.teritary,
+      borderRadius: 5,
+      alignSelf: "center",
+      padding: 10,
+    },
+    jobCard: {
+      backgroundColor: colors.layerBackground,
+      padding: 20,
+      borderRadius: 14,
+      marginBottom: 12,
+
+      margin: 16,
+
+      // iOS shadow
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 0, // soft drop
+      },
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+
+      // Android shadow
+      elevation: 5,
     },
     spacer: { height: 12 },
   });

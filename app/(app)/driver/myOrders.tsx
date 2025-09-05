@@ -1,4 +1,4 @@
-import JobList from "@/components/JobList";
+import JobList from "@/components/JobCard";
 import { useTheme } from "@/constants/theme";
 import { useRouter } from "expo-router";
 import React from "react";

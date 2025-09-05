@@ -1,5 +1,6 @@
 import { useTheme } from "@/constants/theme";
 import { FlatList, Text, View } from "react-native";
+import CustomHeader from "./CustomHeader";
 
 // Job Details Screen to show bids for a specific job
 interface JobDetailsProps {
@@ -20,6 +21,7 @@ export const JobDetails: React.FC<JobDetailsProps> = ({ jobId, bids }) => {
 
   return (
     <View style={[styles.container, { padding: 16 }]}>
+      <CustomHeader title={`Order #${jobId}`} />
       <Text style={styles.title}>Bids for Job #{jobId}</Text>
       {jobBids.length === 0 ? (
         <Text style={styles.body}>No bids yet.</Text>

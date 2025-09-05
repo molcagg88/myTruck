@@ -122,28 +122,28 @@ export default function LoadingScreen({
           <Animated.View
             style={[
               styleLocal.dot,
-              { backgroundColor: "white" },
+              { backgroundColor: colors.text },
               dotStyle(dot1),
             ]}
           />
           <Animated.View
             style={[
               styleLocal.dot,
-              { backgroundColor: "white" },
+              { backgroundColor: colors.text },
               dotStyle(dot2),
             ]}
           />
           <Animated.View
             style={[
               styleLocal.dot,
-              { backgroundColor: "white" },
+              { backgroundColor: colors.text },
               dotStyle(dot3),
             ]}
           />
         </View>
         {/* Texts */}
         <View style={styleLocal.textBlock}>
-          <Text style={[styleLocal.title, { color: "white" }, titleStyle]}>
+          <Text style={[styleLocal.title, { color: colors.text }, titleStyle]}>
             {title}
           </Text>
           {subtitle ? (
@@ -203,7 +203,7 @@ const styleLocal = StyleSheet.create({
   logoInner: { width: 44, height: 44, borderRadius: 14 },
   textBlock: { alignItems: "center", marginBottom: 18 },
   title: { fontSize: 18, fontWeight: "700", letterSpacing: 0.2 },
-  subtitle: { marginTop: 6, fontSize: 13, color: "#cbd5e1" },
+  subtitle: { marginTop: 6, fontSize: 13 },
   dotsRow: {
     flexDirection: "row",
     alignItems: "flex-end",
