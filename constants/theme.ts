@@ -94,6 +94,17 @@ export function createTheme(mode: ThemeType = "light") {
       borderColor: colors.secondary,
       borderWidth: 1,
     },
+    buttonTeritary: {
+      backgroundColor: colors.teritarySoft,
+      paddingVertical: 14,
+      paddingHorizontal: 20,
+      borderRadius: 12,
+      alignItems: "center",
+      justifyContent: "center",
+      marginVertical: 6,
+      borderColor: colors.teritary,
+      borderWidth: 1,
+    },
     buttonText: { color: colors.primary, fontWeight: "600", fontSize: 16 },
     buttonSecondaryText: {
       color: colors.secondary,

@@ -120,10 +120,10 @@ const JobCard: React.FC<JobCardProps> = ({ data }) => {
           </Text>
         </View>
       </View>
-      {bids.filter((bid) => bid.job_id == item.id) && (
+      {bids.filter((bid) => bid.job_id == item.id).length != 0 && (
         <TouchableOpacity
           style={[styles.button, { marginTop: 10 }]}
-          onPress={() => router.push(`/jobs/${item.id}`)}
+          onPress={() => router.push(`/customerJobs/${item.id}`)}
         >
           <Text style={styles.buttonText}>
             Show Bids{" "}
@@ -233,7 +233,7 @@ const JobCard: React.FC<JobCardProps> = ({ data }) => {
           </Text>
           <TouchableOpacity
             style={[styles.button, { marginTop: 10 }]}
-            onPress={() => router.push(`/jobs/${item.id}`)}
+            onPress={() => router.push(`/customerJobs/${item.id}`)}
           >
             <Text style={styles.buttonText}>Confirm delivery</Text>
           </TouchableOpacity>

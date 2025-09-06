@@ -1,59 +1,39 @@
-import LoadForm from "@/components/LoadForm";
-import { Tablet } from "@/components/Tablet";
-import ToastComponent from "@/components/ToastMessage";
+import JobCardDriver from "@/components/JobCardDriver";
+import { JobType, MockData } from "@/constants/data";
 import { useTheme } from "@/constants/theme";
-import { Storage } from "@/services/SecureStore";
-import {
-  useLocalSearchParams,
-  useRouter,
-  useSearchParams,
-} from "expo-router/build/hooks";
+import { useRouter } from "expo-router";
 import React from "react";
-import { ScrollView, Text, TouchableOpacity } from "react-native";
+import { FlatList, Text, View } from "react-native";
 
-interface TokenPayload {
-  type: "customer" | "driver";
-  active: boolean;
-  fname: string;
-  lname: string;
-  phone: string;
+interface JobCardProps {
+  data: JobType[];
 }
 
-type HomeSearchParams = {
-  token: string;
-};
+type JobStatus =
+  | "unassigned"
+  | "assigned"
+  | "pickedUp"
+  | "complete"
+  | "confirmed";
+
+const data = MockData;
 
 export default function home() {
-  const params = useSearchParams();
-  const { token } = useLocalSearchParams<HomeSearchParams>();
   const { styles, colors } = useTheme();
-  const toast = params.get("toast") ?? null;
   const router = useRouter();
-  function handleLogout() {
-    Storage.deleteValue("token");
-    router.replace("/(auth)");
-  }
 
-  if (token != "") {
-    console.log(token);
-    // const user = jwtDecode(token);
-    // console.log(user);
-  }
+  const renderItem = ({ item }: { item: JobType }) => (
+    <JobCardDriver data={item} />
+  );
 
   return (
-    <ScrollView style={styles.container}>
-      {toast != null && <ToastComponent message={toast} />}
-      <TouchableOpacity
-        style={{ alignSelf: "flex-end" }}
-        onPress={handleLogout}
-      >
-        <Tablet text="logout" type={3} size={18} />
-      </TouchableOpacity>
-      <Text style={[styles.title, { fontSize: 30, fontWeight: "400" }]}>
-        Hello
-        {/* {user.fname} */}
-      </Text>
-      <LoadForm />
-    </ScrollView>
+    <View style={styles.container}>
+      <Text style={styles.title}>Hello driver</Text>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </View>
   );
 }

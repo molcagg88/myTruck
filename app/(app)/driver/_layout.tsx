@@ -2,6 +2,7 @@ import { useTheme } from "@/constants/theme";
 import { FontAwesome5, FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
+import Toast from "react-native-toast-message";
 
 export default function AppLayout() {
   const { styles, colors } = useTheme();
@@ -29,9 +30,9 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="myOrders"
+          name="myJobs"
           options={{
-            title: "My orders",
+            title: "My jobs",
             tabBarIcon: ({ size, color }) => (
               <FontAwesome6 name="truck-fast" size={size} color={color} />
             ),
@@ -65,6 +66,7 @@ export default function AppLayout() {
           }}
         />
       </Tabs>
+      <Toast />
     </>
   );
 }

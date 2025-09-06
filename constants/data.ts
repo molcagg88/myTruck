@@ -14,10 +14,17 @@ export interface JobType {
   price: string | number;
 }
 
+export interface BidType {
+  id: string | number;
+  job_id: string | number;
+  amount: string | number;
+  bidder_id: string | number;
+}
+
 export const MockData: JobType[] = [
   {
     id: 1,
-    status: "pickedUp",
+    status: "unassigned",
     pickup: "henny",
     dropoff: "Kality",
     loadType: "Ceramic",
@@ -57,9 +64,9 @@ export const MockData: JobType[] = [
   },
 ];
 
-export const bids = [
-  { job_id: 4, amount: 85000, bidder_id: 21 },
-  { job_id: 1, amount: 85000, bidder_id: 22 },
-  { job_id: 1, amount: 85000, bidder_id: 22 },
-  { job_id: 1, amount: 85000, bidder_id: 22 },
+export const bids: BidType[] = [
+  { id: 1, job_id: 4, amount: 85000, bidder_id: 21 },
+  { id: 2, job_id: 1, amount: 85000, bidder_id: 22 },
+  { id: 3, job_id: 1, amount: 85000, bidder_id: 22 },
+  { id: 4, job_id: 1, amount: 85000, bidder_id: 22 },
 ];

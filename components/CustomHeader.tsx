@@ -6,14 +6,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface HeaderProps {
   title: string;
+  forUser: "customer" | "driver";
 }
 
-const CustomHeader: React.FC<HeaderProps> = ({ title }) => {
+const CustomHeader: React.FC<HeaderProps> = ({ title, forUser }) => {
   const { styles, colors } = useTheme();
   const router = useRouter();
 
   const handleGoBack = () => {
-    router.push("/(app)/customer/myOrders");
+    router.push(`/${forUser == "customer" ? "customer/myOrders" : "driver"}`);
   };
 
   return (
