@@ -18,6 +18,7 @@ const palette = {
     buttonText: "#FFFFFF",
     backButton: "#E8EAED",
     dim: "#696969ff",
+    dimInvert: "#dadadaff",
     primarySoft: "#e6f4fc",
     secondarySoft: "#fdeaf5",
     teritarySoft: "#e6f6e9",
@@ -37,7 +38,8 @@ const palette = {
     buttonText: "#202124",
     backButton: "#5F6368",
     dim: "#ccccccff",
-    primarySoft: "#308cfc36",
+    dimInvert: "#636363ff",
+    primarySoft: "#163459ff",
     secondarySoft: "#39162e",
     teritarySoft: "#0e2d1e",
     layerBackground: "#404040ff",
@@ -72,6 +74,7 @@ export function createTheme(mode: ThemeType = "light") {
       lineHeight: 22,
       marginBottom: 12,
     },
+
     button: {
       backgroundColor: colors.primarySoft,
       paddingVertical: 14,
@@ -129,7 +132,7 @@ export function createTheme(mode: ThemeType = "light") {
     backButton: {
       padding: 8,
       borderRadius: 8,
-      backgroundColor: colors.backButton,
+      backgroundColor: colors.background,
       alignSelf: "flex-start",
       marginBottom: 16,
     },

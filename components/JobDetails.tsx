@@ -21,7 +21,10 @@ export const JobDetails: React.FC<JobDetailsProps> = ({ jobId, bids }) => {
   }
   return (
     <View style={[styles.container, { padding: 0 }]}>
-      <CustomHeader forUser="customer" title={`Bids for job #${jobId}`} />
+      <CustomHeader
+        backTo={"/(app)/customer/myOrders"}
+        title={`Bids for job #${jobId}`}
+      />
 
       {jobBids.length === 0 ? (
         <Text style={styles.body}>No bids yet.</Text>

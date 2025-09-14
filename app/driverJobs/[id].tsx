@@ -37,7 +37,7 @@ const JobDetailsScreen = () => {
   }
   return (
     <View style={styles.container}>
-      <CustomHeader forUser="driver" title="Apply" />
+      <CustomHeader backTo={"/(app)/driver"} title="Apply" />
 
       <JobCardDriver data={item} applyPage={true} />
       <View>

@@ -1,21 +1,30 @@
+import { User } from "@/constants/data";
 import { useTheme } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { toArray } from "lodash";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-export default function CustomerCard() {
+interface CustomerCardProps {
+  item: User;
+}
+
+const CustomerCard: React.FC<CustomerCardProps> = ({ item }) => {
   const { styles, colors } = useTheme();
+
   return (
     <View
       style={[
         styles.card,
         localStyles.customerCard,
         {
-          backgroundColor: colors.background,
+          backgroundColor: colors.layerBackground,
+          padding: 10,
+
           borderColor: colors.text,
           borderWidth: 0,
-          marginLeft: -20,
-          height: 50,
+          marginLeft: -10,
+          height: 80,
         },
       ]}
     >
@@ -33,7 +42,9 @@ export default function CustomerCard() {
           alignContent: "center",
         }}
       >
-        <Text style={[styles.subtitle, { marginBottom: -3 }]}>John Doe</Text>
+        <Text style={[styles.subtitle, { marginBottom: -3 }]}>
+          {item.fname} {toArray(item.lname)[0]}.
+        </Text>
         <Text style={styles.body}>
           <Ionicons name="star" />
           <Ionicons name="star" />
@@ -42,8 +53,8 @@ export default function CustomerCard() {
       </View>
     </View>
   );
-}
-
+};
+export default CustomerCard;
 const localStyles = StyleSheet.create({
   image: {
     width: "100%",

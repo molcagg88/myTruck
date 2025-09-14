@@ -1,4 +1,4 @@
-import { JobType, bids } from "@/constants/data";
+import { JobType, MockUsers, bids } from "@/constants/data";
 import { useTheme } from "@/constants/theme";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -32,7 +32,7 @@ const JobCardDriver: React.FC<JobCardProps> = ({ data, applyPage }) => {
       <Text style={[styles.subtitle, { marginBottom: 10 }]}>
         Order #{item.id}
       </Text>
-      <CustomerCard />
+      <CustomerCard item={MockUsers[0]} />
 
       <View style={{ marginTop: 4, marginBottom: 10 }}>
         <View style={{ flexDirection: "row", marginBottom: 4 }}>
@@ -130,7 +130,7 @@ const JobCardDriver: React.FC<JobCardProps> = ({ data, applyPage }) => {
                   style={{ paddingTop: 2 }}
                   name="send-outline"
                   size={18}
-                  color={colors.teritary}
+                  color={colors.primary}
                 />
                 <Text style={styles.buttonText}>Apply</Text>
               </TouchableOpacity>

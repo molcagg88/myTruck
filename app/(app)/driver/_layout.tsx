@@ -13,7 +13,7 @@ export default function AppLayout() {
           tabBarActiveBackgroundColor: colors.primarySoft,
           tabBarActiveTintColor: colors.primary,
           tabBarInactiveTintColor: colors.dim,
-          headerTitle: "Driver mode",
+          headerShown: false,
           tabBarStyle: {
             backgroundColor: colors.background,
             borderColor: colors.background,
@@ -51,15 +51,6 @@ export default function AppLayout() {
           name="myAccount"
           options={{
             title: "My account",
-            tabBarIcon: ({ size, color }) => (
-              <Ionicons name="person" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="progress"
-          options={{
-            title: "Progress",
             tabBarIcon: ({ size, color }) => (
               <Ionicons name="person" size={size} color={color} />
             ),

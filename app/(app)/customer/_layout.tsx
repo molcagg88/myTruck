@@ -55,15 +55,6 @@ export default function AppLayout() {
             ),
           }}
         />
-        <Tabs.Screen
-          name="progress"
-          options={{
-            title: "Progress",
-            tabBarIcon: ({ size, color }) => (
-              <Ionicons name="person" size={size} color={color} />
-            ),
-          }}
-        />
       </Tabs>
     </>
   );

@@ -1,3 +1,4 @@
+import CustomHeader from "@/components/CustomHeader";
 import { useTheme } from "@/constants/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
@@ -15,6 +16,7 @@ function MyAccountPage() {
 
   return (
     <View style={[styles.container, { flex: 1 }]}>
+      <CustomHeader title={"Account"} back={false} backTo={"/"} />
       {/* User Info Card */}
       <View style={[styles.card, { alignItems: "center", padding: 20 }]}>
         <Image

@@ -20,7 +20,7 @@ export default function Payment() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <View>
-          <CustomHeader forUser="customer" title="Payment" />
+          <CustomHeader backTo={() => router.back()} title="Payment" />
         </View>
         <JobCardPayment
           data={

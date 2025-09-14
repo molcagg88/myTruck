@@ -44,3 +44,4 @@ internalcodes.txt
 __pycache__/
 *.pyc
 venv/
+dataCleaning/

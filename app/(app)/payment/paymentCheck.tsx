@@ -11,7 +11,7 @@ export default function paymentCheck() {
   const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
-      <CustomHeader forUser="customer" title="Payment status" />
+      <CustomHeader backTo={"/"} back={false} title="Payment status" />
       <View
         style={{
           alignItems: "center",

@@ -1,2 +1,11 @@
 fastapi
 uvicorn
+sqlmodel
+sqlalchemy
+asyncpg
+bcrypt
+pydantic
+pydantic-settings
+PyJWT
+python-jose
+cryptography == 39.0.1

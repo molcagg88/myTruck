@@ -20,28 +20,7 @@ export const Progress: React.FC<ProgressProps> = ({ job_id }) => {
   ];
 
   return (
-    <View style={styles.container}>
-      <View style={{ padding: 20 }}>
-        <Text style={styles.title}>Job progress</Text>{" "}
-      </View>
-
-      <View
-        style={{
-          alignSelf: "center",
-          padding: 20,
-          backgroundColor: colors.card,
-          borderRadius: 5,
-          shadowColor: "#000000ff",
-          shadowRadius: 25,
-          shadowOpacity: 0.1,
-          minWidth: 320,
-        }}
-      >
-        <Text style={styles.body}>Pickup:</Text>
-        <Text style={styles.body}>Drop-off:</Text>
-        <Text style={styles.body}>Status: </Text>
-      </View>
-
+    <View>
       {/* Location log timeline */}
       <View
         style={[

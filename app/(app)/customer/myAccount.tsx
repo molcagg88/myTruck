@@ -48,9 +48,7 @@ function MyAccountPage() {
             />
           )}
         </View>
-
         <Text style={styles.body}>{phone}</Text>
-
         <TouchableOpacity
           style={[styles.button, { marginTop: 20 }]}
           onPress={onChangePIN}

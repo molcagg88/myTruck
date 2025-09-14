@@ -1,5 +1,7 @@
 from .commonModels import Types
 from pydantic import BaseModel
+from typing import Optional
+from .commonModels import Types
 
 class SendOTPRequest(BaseModel):
     phone: str
@@ -8,6 +10,7 @@ class VerifyOTPRequest(BaseModel):
     phone: str
     otp: str
 class SigninRequest(BaseModel):
+    user_type: Types
     pin: str
     phone: str
 
@@ -16,4 +19,5 @@ class SetDetialsRequest(BaseModel):
     fname: str
     lname: str
     phone: str
+    plate_no: Optional[str] = None
     pin: str
