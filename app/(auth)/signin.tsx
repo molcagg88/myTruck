@@ -1,32 +1,54 @@
+import CustomHeader from "@/components/CustomHeader";
 import { useTheme } from "@/constants/theme";
 import { Storage } from "@/services/SecureStore";
+import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import axios from "axios";
-import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import Constants from "expo-constants";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import { Alert, Text, TextInput, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const API_URL_PHONE = "192.168.1.3:8000";
-const API_URL_LOCAL = "localhost:8000";
+const BASE_URL = Constants.expoConfig?.extra?.BASE_URL;
 
 export default function signin() {
   const { styles, colors } = useTheme();
   const [pin, setPin] = useState("");
   const [loading, setLoading] = useState(false);
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState<string | string[]>("");
   const router = useRouter();
+  const { phoneRedirect } = useLocalSearchParams();
+  const [userType, setUserType] = useState<"customer" | "driver">("customer");
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    if (phoneRedirect) {
+      console.log(phoneRedirect);
+      setPhone(phoneRedirect);
+    }
+  }, []);
+
+  const handleValueChange = (event: any) => {
+    // This is the new index of the selected segment
+    const newIndex = event.nativeEvent.selectedSegmentIndex;
+    setSelectedIndex(newIndex);
+    setUserType(selectedIndex == 0 ? "driver" : "customer");
+  };
 
   async function handleSignin() {
     setLoading(true);
     try {
-      const response = await axios.post(`http://${API_URL_PHONE}/signin`, {
+      console.log(userType, phone, pin);
+      const response = await axios.post(`${BASE_URL}/auth/signin`, {
+        user_type: userType,
         phone: phone,
         pin: pin,
       });
-      if (response.data.success) {
+      console.log(response.data);
+      if (response.data.data.success) {
         const token = response.data.token;
         Storage.save("token", token);
-        router.replace(`/?token=${token}`);
+        router.replace(`/(app)/${userType}`);
       } else {
         setLoading(false);
         Alert.alert("Sign-in failed, please try again.");
@@ -51,7 +73,18 @@ export default function signin() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.subtitle}>Sign-in</Text>
+      <CustomHeader title="Sign-in" backTo={"/(auth)"} />
+      <SegmentedControl
+        style={{
+          padding: 10,
+          height: 50,
+          justifyContent: "center",
+          marginVertical: 10,
+        }}
+        values={["Customer", "Driver"]}
+        selectedIndex={selectedIndex}
+        onChange={handleValueChange}
+      />
       <TextInput
         style={styles.input}
         inputMode="numeric"

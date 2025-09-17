@@ -1,12 +1,14 @@
+import CustomHeader from "@/components/CustomHeader";
 import { useTheme } from "@/constants/theme";
+import { Storage } from "@/services/SecureStore";
 import axios from "axios";
+import Constants from "expo-constants";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Button, Text, TextInput } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Toast from "react-native-toast-message";
 
-const API_URL_PHONE = "192.168.1.4:8000";
-const API_URL_LOCAL = "localhost:8000";
+const BASE_URL = Constants.expoConfig?.extra?.BASE_URL;
 
 export default function OtpScreen() {
   const router = useRouter();
@@ -24,20 +26,20 @@ export default function OtpScreen() {
 
     setLoading(true);
     try {
-      const response = await axios.post(`http://${API_URL_PHONE}/verify-otp`, {
+      const response = await axios.post(`${BASE_URL}/auth/verify-otp`, {
         phone: phone,
         otp: otp,
       });
 
       console.log(response.data);
 
-      if (response.data == 102) {
+      if (response.data.internal == 102) {
         Alert.alert("Error", "Short code was not sent. Try again");
-        router.replace("/signup");
+        router.replace("/(auth)/signup");
       }
-      if (response.data == 103) {
+      if (response.data.internal == 103) {
         Alert.alert("Error", "Short code is expired. Try again");
-        router.replace("/signup");
+        router.replace("/(auth)/signup");
       }
 
       if (response.data.status == 400) {
@@ -47,9 +49,11 @@ export default function OtpScreen() {
         setErrormessage("OTP is incorrect");
       }
 
-      if (response.data.verified) {
-        Alert.alert("Success", "Phone number verified!");
-        router.replace(`/details?phone=${phone}`);
+      if (response.data.success) {
+        console.log(response.data.data.token);
+        await Storage.save("tempToken", response.data.data.token);
+        Toast.show({ type: "success", text1: "Successfully verified" });
+        router.replace(`/(auth)/details`);
       } else {
         Alert.alert("Error", "Invalid OTP. Try again.");
       }
@@ -63,7 +67,8 @@ export default function OtpScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <CustomHeader title="Confirm phone number" backTo={"/(auth)/signup"} />
       <Text style={styles.body}>Enter the OTP sent to {phone}:</Text>
       <TextInput
         style={styles.input}
@@ -73,11 +78,15 @@ export default function OtpScreen() {
         onChangeText={setOtp}
         maxLength={6}
       />
-      <Button
-        title={loading ? "Verifying..." : "Verify OTP"}
+      <TouchableOpacity
+        style={styles.button}
         onPress={handleVerifyOtp}
         disabled={loading}
-      />
+      >
+        <Text style={styles.buttonText}>
+          {loading ? "Verifying..." : "Verify OTP"}
+        </Text>
+      </TouchableOpacity>
       {error && (
         <Text
           style={{
@@ -89,6 +98,6 @@ export default function OtpScreen() {
           {errorMessage}
         </Text>
       )}
-    </SafeAreaView>
+    </View>
   );
 }

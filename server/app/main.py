@@ -7,17 +7,25 @@ import hashlib
 import uvicorn
 import random
 import time
+
+from typing import Union
+
 from .db.main import init_db
 import asyncio
 from .db.requestModels import (SendOTPRequest, SetDetialsRequest, 
                                    SigninRequest, VerifyOTPRequest)
 from .db.commonModels import Types
-from .db.userModels import User, UserTemp
+from .db.userModels import User, UserTemp, Customer, Driver
 from .utils.authToken import create_access_token, get_current_user
 
 from .services.otpService import send_otp_svc, verify_otp_svc
 from .services.userExistenceService import set_details_svc
 from .services.authService import signin_svc
+
+from app.routes.auth import auth_router
+from app.routes.jobs import job_router
+from app.routes.bids import bid_router
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -30,8 +38,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+app.include_router(auth_router)
+app.include_router(job_router)
+app.include_router(bid_router)
+
 origins = [
     "http://localhost:8081",
+    "http://localhost:8081/",
     "http://127.0.0.1:8081",
     "http://192.168.1.2",
     "http://192.168.1.3"
@@ -81,6 +94,7 @@ async def setDetails(request: SetDetialsRequest, DetailsServiceResponse = Depend
 @app.post('/signin')
 async def signin(request: SigninRequest, signinServiceResponse = Depends(signin_svc)):
     return signinServiceResponse
+
 
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)

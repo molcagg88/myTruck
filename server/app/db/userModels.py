@@ -1,5 +1,5 @@
 from .commonModels import Types
-from pydantic import BaseModel, field_validator, ValidationInfo
+from pydantic import BaseModel, field_validator, ConfigDict
 from sqlmodel import SQLModel, Field, Column, ForeignKey, Relationship
 from uuid import UUID, uuid4
 from typing import List, Union, Optional
@@ -129,6 +129,8 @@ class Jobs(SQLModel, table=True):
     customer: Optional[Customer] = Relationship(back_populates="jobs")  # type: ignore
     driver: Optional[Driver] = Relationship(back_populates="jobs")
     bids: List["Bids"] = Relationship(back_populates="job")
+
+    
 
 class JobCreate(BaseModel):
     @field_validator('price')
