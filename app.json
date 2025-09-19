@@ -41,7 +41,8 @@
       "typedRoutes": true
     },
     "extra": {
-      "BASE_URL": "http://localhost:8000"
+      "BASE_URL": "http://localhost:8000",
+      "TOKEN": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzIxIiwiZXhwIjoxNzU4NzY1MTQxLjk2ODIxN30.9TMw-q0ko0S-lyVuR1yPZLrbvhbMncEdhqephysOGfU"
     }
   }
 }

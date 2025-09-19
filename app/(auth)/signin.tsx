@@ -1,13 +1,13 @@
 import CustomHeader from "@/components/CustomHeader";
 import { useTheme } from "@/constants/theme";
-import { Storage } from "@/services/SecureStore";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import axios from "axios";
 import Constants from "expo-constants";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Alert, Text, TextInput, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AuthContext } from "../hooks/AuthContext";
 
 const BASE_URL = Constants.expoConfig?.extra?.BASE_URL;
 
@@ -20,6 +20,7 @@ export default function signin() {
   const { phoneRedirect } = useLocalSearchParams();
   const [userType, setUserType] = useState<"customer" | "driver">("customer");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { login, isAuth } = useContext(AuthContext);
 
   useEffect(() => {
     if (phoneRedirect) {
@@ -28,11 +29,12 @@ export default function signin() {
     }
   }, []);
 
-  const handleValueChange = (event: any) => {
+  const handleValueChange = (value: string) => {
     // This is the new index of the selected segment
-    const newIndex = event.nativeEvent.selectedSegmentIndex;
+    const newIndex = value == "Customer" ? 0 : 1;
     setSelectedIndex(newIndex);
-    setUserType(selectedIndex == 0 ? "driver" : "customer");
+    console.log(`value: ${newIndex}`);
+    setUserType(newIndex == 0 ? "customer" : "driver");
   };
 
   async function handleSignin() {
@@ -45,10 +47,11 @@ export default function signin() {
         pin: pin,
       });
       console.log(response.data);
-      if (response.data.data.success) {
+      if (response.data.data.success == true) {
         const token = response.data.token;
-        Storage.save("token", token);
-        router.replace(`/(app)/${userType}`);
+        login(token);
+        console.log(isAuth);
+        // router.replace(`/(app)/${decoded.user_type}`);
       } else {
         setLoading(false);
         Alert.alert("Sign-in failed, please try again.");
@@ -83,7 +86,7 @@ export default function signin() {
         }}
         values={["Customer", "Driver"]}
         selectedIndex={selectedIndex}
-        onChange={handleValueChange}
+        onValueChange={handleValueChange}
       />
       <TextInput
         style={styles.input}
@@ -107,7 +110,7 @@ export default function signin() {
         disabled={loading}
       >
         <Text style={styles.buttonText}>
-          {loading ? "Sending..." : "Send OTP"}{" "}
+          {loading ? "Signing in..." : "Sign-in"}{" "}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>

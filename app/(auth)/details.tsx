@@ -60,11 +60,12 @@ export default function Details() {
         fname: fname,
         lname: lname,
         pin: pin,
+        plate_no: accountType == "driver" ? plateNo : null,
       });
 
       // The hardcoded token is kept as requested.
       const tempToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiMjUxNTU1NTU1NTU1IiwiZXhwIjoxNzU4MDc2OTEyLjAzNDU3Mn0.IoxisOPPgseBrPXZNhIlk_PkvUUjsSp1n1T5SnoWiTc";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiMjUxNzc3Nzc3Nzc3IiwiZXhwIjoxNzU4MTc4OTg3LjIxODUwNX0.CjCgZ2eN59kgMJFB8WaRqsVYKx_LfGZJCSE8K7oO5tU";
 
       const response = await axios.post(
         `${BASE_URL}/auth/setdetails`,
@@ -86,14 +87,12 @@ export default function Details() {
       if (response.data.success) {
         await Storage.deleteValue("tempToken");
         await Storage.save("token", response.data.token);
-
-        const type = jwtDecode(response.data.token);
+        console.log(response.data.token);
+        const type = jwtDecode(response.data.data.token);
         console.log(type);
-        // router.replace(
-        //   `/(app)/${type.startsWith("c") ? "driver" : "customer"}?token=${
-        //     response.data.token
-        //   }&toast=Account created successfully`
-        // );
+        router.replace(
+          `/(app)/${type.data.startsWith("c") ? "customer" : "driver"}`
+        );
       }
     } catch (error: any) {
       console.log(`error: ${error}`);
@@ -152,7 +151,7 @@ export default function Details() {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { gap: 18 }]}>
+    <SafeAreaView style={[styles.container, { gap: 10 }]}>
       <CustomHeader backTo={"/"} back={false} title="Complete your account" />
       <AccountTypeSelector
         selected={accountType}
@@ -163,7 +162,10 @@ export default function Details() {
         onChangeText={setFname}
         label={"First name"}
         mode="outlined"
-        outlineColor={colors.primarySoft}
+        textColor={colors.text}
+        theme={{ colors: { onSurfaceVariant: colors.dim } }}
+        style={{ backgroundColor: colors.background }}
+        outlineColor={colors.primary}
         activeOutlineColor={colors.primary}
         error={!isFnameValid}
       />
@@ -173,8 +175,11 @@ export default function Details() {
       <TextInput
         label={"Last name"}
         mode="outlined"
-        outlineColor={colors.primarySoft}
+        outlineColor={colors.primary}
         activeOutlineColor={colors.primary}
+        textColor={colors.text}
+        theme={{ colors: { onSurfaceVariant: colors.dim } }}
+        style={{ backgroundColor: colors.background }}
         value={lname}
         onChangeText={setLname}
         error={!islnameValid}
@@ -186,8 +191,11 @@ export default function Details() {
       <TextInput
         label={"PIN (4-digits)"}
         mode="outlined"
-        outlineColor={colors.primarySoft}
+        outlineColor={colors.primary}
         activeOutlineColor={colors.primary}
+        textColor={colors.text}
+        style={{ backgroundColor: colors.background }}
+        theme={{ colors: { onSurfaceVariant: colors.dim } }}
         maxLength={4}
         value={pin}
         onChangeText={(text) => setPin(text.replace(/[^0-9]/g, ""))} // only allow numbers
@@ -200,8 +208,11 @@ export default function Details() {
       <TextInput
         label={"Repeat pin"}
         mode="outlined"
-        outlineColor={colors.primarySoft}
+        outlineColor={colors.primary}
         activeOutlineColor={colors.primary}
+        textColor={colors.text}
+        theme={{ colors: { onSurfaceVariant: colors.dim } }}
+        style={{ backgroundColor: colors.background }}
         value={conPin}
         onChangeText={(text) => setConpin(text.replace(/[^0-9]/g, ""))} // only allow numbers
         keyboardType="numeric"
@@ -212,7 +223,12 @@ export default function Details() {
         <TextInput
           label={"Plate number"}
           mode="outlined"
-          outlineColor={colors.primarySoft}
+          textColor={colors.text}
+          outlineColor={colors.primary}
+          theme={{
+            colors: { onSurfaceVariant: colors.dim },
+          }}
+          style={{ backgroundColor: colors.background, marginTop: 28 }}
           activeOutlineColor={colors.primary}
           maxLength={6}
           value={plateNo}

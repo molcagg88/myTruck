@@ -7,7 +7,7 @@ from app.db.main import get_db_session
 from app.db.userModels import Driver, Customer, DriverPublic, CustomerPublic
 from sqlmodel import select
 from app.db.responseModels import TokenizedResponse
-from app.db.commonModels import Types
+from app.db.commonModels import Types, TokenDataModel
 
 
 def hash_pin(pin: str):
@@ -30,11 +30,11 @@ async def signin_svc(request: SigninRequest, session = Depends(get_db_session)):
         raise HTTPException(401, detail="Wrong pin")
     
     if isinstance(user, Driver):
-        payload = "d"+str(user.uid)
-        return TokenizedResponse(token=create_access_token(payload), data={"success":True})
+        payload = TokenDataModel(uid=user.uid, user_type=Types.driver)
+        return TokenizedResponse(token=create_access_token(payload.model_dump()), data={"success":True})
     elif isinstance(user, Customer):
-        payload = "c"+str(user.uid)
-        return TokenizedResponse(token=create_access_token(payload), data={"success":True})
+        payload = TokenDataModel(uid=user.uid, user_type=Types.customer)
+        return TokenizedResponse(token=create_access_token(payload.model_dump()), data={"success":True})
     
 
     raise HTTPException(500, detail="Signin failed")

@@ -17,6 +17,6 @@ class SetDetialsRequest(BaseModel):
     type: Types
     fname: str
     lname: str
-    plate_no: Optional[str] = None
+    plate_no: str | None
     pin: str
 

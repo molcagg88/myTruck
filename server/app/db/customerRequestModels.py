@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from app.db.commonModels import Types
 
 class CreateJobRequest(BaseModel):
     pickup: str
@@ -15,3 +16,4 @@ class UpdateJobRequest(BaseModel):
     weight: Optional[int] = None
     category: Optional[str] = None
     price: Optional[float] = None
+

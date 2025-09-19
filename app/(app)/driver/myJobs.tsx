@@ -62,6 +62,7 @@ export default function myOrders() {
           </TouchableOpacity>
         </View>
         <View>
+          <Text style={styles.subtitle}>Current job</Text>
           <ActiveJob />
           {/* // <Text
           //   style={[styles.body, { marginVertical: 30, alignSelf: "center" }]}

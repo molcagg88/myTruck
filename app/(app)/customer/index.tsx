@@ -1,3 +1,4 @@
+import { AuthContext } from "@/app/hooks/AuthContext";
 import LoadForm from "@/components/LoadForm";
 import { Tablet } from "@/components/Tablet";
 import ToastComponent from "@/components/ToastMessage";
@@ -8,7 +9,7 @@ import {
   useRouter,
   useSearchParams,
 } from "expo-router/build/hooks";
-import React from "react";
+import React, { useContext } from "react";
 import { ScrollView, Text } from "react-native";
 
 interface TokenPayload {
@@ -29,6 +30,8 @@ export default function home() {
   const { styles, colors } = useTheme();
   const toast = params.get("toast") ?? null;
   const router = useRouter();
+  const { logout } = useContext(AuthContext);
+
   function handleLogout() {
     Storage.deleteValue("token");
     router.replace("/(auth)");
@@ -43,7 +46,7 @@ export default function home() {
   return (
     <ScrollView style={styles.container}>
       {toast != null && <ToastComponent message={toast} />}
-      <Tablet text="logout" type={3} size={18} />
+      <Tablet text="logout" onClick={logout} type={3} size={18} />
       <Text style={[styles.title, { fontSize: 30, fontWeight: "400" }]}>
         Hello
         {/* {user.fname} */}

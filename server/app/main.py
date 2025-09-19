@@ -78,6 +78,7 @@ async def ping():
 async def pingAuthed(user = Depends(get_current_user)):
     return user
 
+
 @app.post("/send-otp")
 async def send_otp(request: SendOTPRequest, otpServiceResponse = Depends(send_otp_svc)):
      

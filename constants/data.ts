@@ -1,11 +1,11 @@
-export type UserTypes = "customer" | "driver";
+// export type UserTypes = "customer" | "driver";
 export enum UserType {
   customer = "customer",
   driver = "driver",
 }
 export interface Customer {
   id: number;
-  type: UserTypes;
+  type: UserType;
   verified: boolean;
   fname: string;
   lname: string;
@@ -14,7 +14,7 @@ export interface Customer {
 
 export interface Driver {
   id: number;
-  type: UserTypes;
+  type: UserType;
   verified: boolean;
   fname: string;
   lname: string;
@@ -24,6 +24,11 @@ export interface Driver {
 }
 export type User = Customer | Driver;
 export type Users = (Customer | Driver)[];
+
+export type DecodedAuth = {
+  data: { uid: number; user_type: UserType };
+  exp: number;
+};
 
 export type JobStatus =
   | "unassigned"
@@ -100,7 +105,7 @@ export const MockData: JobType[] = [
 export const MockUsers: Users = [
   {
     id: 101,
-    type: "driver",
+    type: UserType.driver,
     verified: true,
     fname: "John",
     lname: "Doe",
@@ -110,7 +115,7 @@ export const MockUsers: Users = [
   },
   {
     id: 102,
-    type: "driver",
+    type: UserType.driver,
     verified: false,
     fname: "Jane",
     lname: "Smith",
@@ -120,7 +125,7 @@ export const MockUsers: Users = [
   },
   {
     id: 201,
-    type: "customer",
+    type: UserType.driver,
     verified: true,
     fname: "Alice",
     lname: "Williams",
@@ -128,7 +133,7 @@ export const MockUsers: Users = [
   },
   {
     id: 202,
-    type: "customer",
+    type: UserType.driver,
     verified: false,
     fname: "Bob",
     lname: "Johnson",

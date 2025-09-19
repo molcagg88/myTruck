@@ -7,7 +7,7 @@ from sqlmodel import select
 from sqlalchemy.exc import IntegrityError
 from app.utils.authToken import create_access_token
 from app.services.authService import hash_pin
-
+from app.db.responseModels import CommonResponse
 from fastapi import HTTPException, Depends
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
@@ -18,7 +18,7 @@ async def set_details_svc(
     request: SetDetialsRequest, 
     session: AsyncSession = Depends(get_db_session), tempUser = Depends(get_temp_user)
 ):
-    print(tempUser)
+    print(request)
     try:
         res = await session.exec(
             select(TempUsers).where(TempUsers.phone == tempUser.phone)
@@ -61,9 +61,9 @@ async def set_details_svc(
         await session.refresh(new_user)
         
         if request.type == Types.customer:
-            return {"success": True, "token": create_access_token("c"+str(new_user.uid))}
+            return CommonResponse(success= True, data={"token": create_access_token("c"+str(new_user.uid))})
         else: # Driver
-            return {"success": True, "token": create_access_token("d"+str(new_user.uid))}
+            return CommonResponse(success = True, data={ "token": create_access_token("d"+str(new_user.uid))})
 
     except IntegrityError:
         await session.rollback()

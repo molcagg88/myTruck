@@ -1,6 +1,15 @@
-import { Redirect } from "expo-router";
-import React from "react";
+import { router } from "expo-router";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../hooks/AuthContext";
 
 export default function index() {
-  return <Redirect href={"/(auth)"} />;
+  const { user_type } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (user_type) {
+      router.replace(`/(app)/${user_type}`);
+    }
+  }, [user_type]);
+
+  return null;
 }
